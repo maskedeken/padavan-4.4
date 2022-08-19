@@ -211,6 +211,7 @@ func_fill()
 	user_hosts="$dir_dnsmasq/hosts"
 	user_dnsmasq_conf="$dir_dnsmasq/dnsmasq.conf"
 	user_dhcp_conf="$dir_dnsmasq/dhcp.conf"
+	user_resolv_conf="$dir_dnsmasq/resolv.conf"
 	user_ovpnsvr_conf="$dir_ovpnsvr/server.conf"
 	user_ovpncli_conf="$dir_ovpncli/client.conf"
 	user_inadyn_conf="$dir_inadyn/inadyn.conf"
@@ -461,6 +462,14 @@ EOF
 	for i in dnsmasq.conf hosts ; do
 		[ -f "$dir_storage/$i" ] && mv -n "$dir_storage/$i" "$dir_dnsmasq"
 	done
+
+	if [ ! -f "$user_resolv_conf" ] ; then
+		cat > "$user_resolv_conf" <<EOF
+nameserver 114.114.114.114
+nameserver 114.114.115.115
+EOF
+	fi
+
 	if [ ! -f "$user_dnsmasq_conf" ] ; then
 		cat > "$user_dnsmasq_conf" <<EOF
 # Custom user conf file for dnsmasq

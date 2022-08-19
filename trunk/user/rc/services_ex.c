@@ -332,7 +332,7 @@ start_dns_dhcpd(int is_ap_mode)
 		    "bind-dynamic\n"
 		    "interface=%s\n",
 		    SYS_USER_NOBODY,
-		    DNS_RESOLV_CONF,
+		    "/etc/storage/dnsmasq/resolv.conf",
 		    IFNAME_BR);
 
 	if (!is_ap_mode) {
