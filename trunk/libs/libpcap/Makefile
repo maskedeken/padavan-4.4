@@ -1,5 +1,8 @@
-SRC_NAME=libpcap-1.9.1
+SRC_NAME=libpcap-1.10.1
 SRC_URL=http://www.tcpdump.org/release/$(SRC_NAME).tar.gz
+
+COPTS = $(filter-out -I%, $(CFLAGS))
+CFLAGS := $(COPTS)
 
 all: download_test extract_test config_test
 	$(MAKE) -j$(HOST_NCPU) -C $(SRC_NAME)
@@ -23,24 +26,19 @@ config_test:
 
 configure:
 	( cd $(SRC_NAME) ; \
-	ac_cv_netfilter_can_compile=no \
+	ac_cv_netfilter_can_compile=yes \
 	./configure \
 		--prefix=$(STAGEDIR) \
-		--enable-static \
 		--enable-shared \
 		$(if $(CONFIG_IPV6),--enable-ipv6,--disable-ipv6) \
 		--disable-yydebug \
 		--disable-dbus \
 		--disable-usb \
 		--disable-bluetooth \
-		--with-pcap=linux \
-		--without-flex \
-		--without-bison \
 		--without-dag \
 		--without-septel \
 		--without-libnl \
-		--host=$(HOST_TARGET) \
-		--build=$(HOST_BUILD) ; \
+		--host=$(HOST_TARGET) ; \
 	)
 
 clean:
