@@ -1,4 +1,4 @@
-SRC_NAME=openssh-8.1p1
+SRC_NAME=openssh-9.0p1
 SRC_URL=https://ftp.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/$(SRC_NAME).tar.gz
 
 CFLAGS += -ffunction-sections -fdata-sections
@@ -18,6 +18,7 @@ extract_test:
 	( if [ ! -d $(SRC_NAME) ]; then \
 		tar xzf $(SRC_NAME).tar.gz; \
 		patch -d $(SRC_NAME) -p1 -i ../openssh-orig.patch; \
+		patch -d $(SRC_NAME) -p1 -i ../9.0.diff; \
 	fi )
 
 config_test:
@@ -40,6 +41,7 @@ configure:
 		--with-privsep-user=sshd \
 		--with-sandbox=no \
 		--without-pam \
+		--without-ssh1 \
 		--without-selinux \
 		--without-bsd-auth \
 		--without-kerberos5 \
