@@ -1,4 +1,4 @@
-SRC_NAME=openvpn-2.5.2
+SRC_NAME=openvpn-2.5.7
 
 CFLAGS += -ffunction-sections -fdata-sections -fvisibility=hidden
 LDFLAGS += -Wl,--gc-sections
@@ -8,7 +8,8 @@ all: extract_test config_test
 
 extract_test:
 	( if [ ! -d $(SRC_NAME) ]; then \
-		tar -xf $(SRC_NAME).tar.xz; \
+		tar -zxf $(SRC_NAME).tar.gz; \
+		patch -d $(SRC_NAME) -p1 < openvpn_xor.patch ; \
 		patch -d $(SRC_NAME) -p1 < $(SRC_NAME).patch ; \
 	fi )
 
@@ -36,7 +37,6 @@ configure:
 		--disable-iproute2 \
 		--disable-unit-tests \
 		--disable-management \
-		--enable-small \
 		--enable-multihome \
 		--enable-pf \
 		--enable-fragment \
