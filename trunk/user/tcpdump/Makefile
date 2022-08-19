@@ -1,7 +1,7 @@
-SRC_NAME=tcpdump-4.9.2
+SRC_NAME=tcpdump-4.99.1
 SRC_URL=https://www.tcpdump.org/release/$(SRC_NAME).tar.gz
 
-CFLAGS += -Os -ffunction-sections -fdata-sections -fvisibility=hidden -DTCPDUMP_MINI
+CFLAGS += -Os -ffunction-sections -fdata-sections -fvisibility=hidden
 LDFLAGS += -Wl,--gc-sections
 
 all: download_test extract_test config_test build
@@ -14,7 +14,6 @@ download_test:
 extract_test:
 	( if [ ! -d $(SRC_NAME) ]; then \
 		tar zxf $(SRC_NAME).tar.gz; \
-		patch -d $(SRC_NAME) -p1 -i ../100-tcpdump_mini.patch; \
 	fi )
 
 config_test:
@@ -26,24 +25,19 @@ config_test:
 
 configure:
 	( cd $(SRC_NAME) ; \
-	ac_cv_linux_vers=3 \
-	ac_cv_header_rpc_rpcent_h=no \
 	ac_cv_lib_rpc_main=no \
-	ac_cv_path_PCAP_CONFIG="$(STAGEDIR)/bin/pcap-config" \
-	td_cv_buggygetaddrinfo=no \
+        ac_cv_path_PCAP_CONFIG="$(STAGEDIR)/bin/pcap-config" \
 	./configure \
 		--prefix=/usr \
 		--without-crypto \
 		--without-smi \
-		--without-cap-ng \
 		--disable-smb \
-		$(if $(CONFIG_IPV6),--enable-ipv6,--disable-ipv6) \
 		--host=$(HOST_TARGET) \
 		--build=$(HOST_BUILD) ; \
 	)
 
 build:
-	$(MAKE) -j$(HOST_NCPU) -C $(SRC_NAME) TCPDUMP_MINI=1
+	$(MAKE) -j$(HOST_NCPU) -C $(SRC_NAME)
 
 clean:
 	rm -f config_done
