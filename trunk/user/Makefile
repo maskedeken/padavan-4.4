@@ -212,6 +212,11 @@ endif
 dir_y						+= mtd-utils
 endif
 
+# my packages
+dir_$(CONFIG_FIRMWARE_INCLUDE_UDPSPEEDER)	+= speederv2
+dir_$(CONFIG_FIRMWARE_INCLUDE_UDPSPEEDER)	+= udp2raw
+dir_$(CONFIG_FIRMWARE_INCLUDE_BIND_UTILS)	+= bind
+
 all:
 	for i in $(dir_y) ; do \
 		[ ! -d $$i ] || \

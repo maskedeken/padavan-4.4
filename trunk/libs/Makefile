@@ -176,6 +176,10 @@ ifneq ($(filter y,$(CONFIG_FIRMWARE_INCLUDE_WING) $(CONFIG_FIRMWARE_INCLUDE_TROJ
 LIBS_INCLUDE_BOOST=y
 endif
 
+ifeq ($(CONFIG_FIRMWARE_INCLUDE_BIND_UTILS),y)
+LIBS_INCLUDE_LIBUV=y
+endif
+
 dir_y						+= libz
 dir_$(LIBS_INCLUDE_NCURSES)			+= libncurses
 dir_$(LIBS_INCLUDE_LIBLZO)			+= liblzo
@@ -185,7 +189,7 @@ dir_$(LIBS_INCLUDE_LIBUSB_0)			+= libusb
 dir_$(LIBS_INCLUDE_LIBUSB_1)			+= libusb-1.0
 dir_$(LIBS_INCLUDE_LIBRTLSDR)			+= librtlsdr
 dir_$(LIBS_INCLUDE_LIBJSON_C)			+= libjson-c
-dir_$(LIBS_INCLUDE_LIBUV)				+= libuv
+dir_$(LIBS_INCLUDE_LIBUV)			+= libuv
 dir_$(LIBS_INCLUDE_LIBWEBSOCKETS)		+= libwebsockets
 dir_$(LIBS_INCLUDE_LIBPCRE)			+= libpcre
 dir_$(LIBS_INCLUDE_LIBEV)			+= libev

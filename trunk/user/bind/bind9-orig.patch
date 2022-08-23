@@ -1,0 +1,60 @@
+--- a/Makefile.am	2022-07-07 20:37:00.187945971 +0800
++++ b/Makefile.am	2022-08-23 13:23:51.331846113 +0800
+@@ -1,6 +1,6 @@
+ include $(top_srcdir)/Makefile.top
+ 
+-SUBDIRS = . lib doc bin fuzz
++SUBDIRS = . lib bin
+ 
+ if HAVE_CMOCKA
+ SUBDIRS += tests
+--- a/bin/Makefile.am	2022-07-07 20:37:00.187945971 +0800
++++ b/bin/Makefile.am	2022-08-23 13:21:54.399204622 +0800
+@@ -1 +1 @@
+-SUBDIRS = named rndc dig delv dnssec tools nsupdate check confgen tests plugins
++SUBDIRS = named dig delv dnssec
+--- a/bin/dig/Makefile.am	2022-07-07 20:37:00.191945972 +0800
++++ b/bin/dig/Makefile.am	2022-08-23 11:44:10.927569228 +0800
+@@ -10,12 +10,16 @@
+ 
+ LDADD +=			\
+ 	libdighost.la		\
++	$(LIBNS_LIBS)		\
+ 	$(LIBISC_LIBS)		\
+ 	$(LIBDNS_LIBS)		\
+ 	$(LIBISCCFG_LIBS)	\
+ 	$(LIBIRS_LIBS)		\
+ 	$(LIBBIND9_LIBS)	\
+-	$(LIBIDN2_LIBS)
++	$(LIBIDN2_LIBS)		\
++	$(OPENSSL_LIBS)		\
++	$(LIBUV_LIBS)		\
++	$(ZLIB_LIBS)
+ 
+ noinst_LTLIBRARIES = libdighost.la
+ 
+--- a/bin/delv/Makefile.am	2022-07-07 20:37:00.191945972 +0800
++++ b/bin/delv/Makefile.am	2022-08-23 13:08:03.533126719 +0800
+@@ -18,4 +18,7 @@
+ 	$(LIBISC_LIBS)			\
+ 	$(LIBDNS_LIBS)			\
+ 	$(LIBISCCFG_LIBS)		\
+-	$(LIBIRS_LIBS)
++	$(LIBIRS_LIBS)			\
++	$(OPENSSL_LIBS)			\
++	$(LIBUV_LIBS)			\
++	$(ZLIB_LIBS)
+--- a/bin/dnssec/Makefile.am	2022-07-07 20:37:00.191945972 +0800
++++ b/bin/dnssec/Makefile.am	2022-08-23 13:13:31.321267760 +0800
+@@ -12,7 +12,10 @@
+ LDADD +=			\
+ 	libdnssectool.la	\
+ 	$(LIBISC_LIBS)		\
+-	$(LIBDNS_LIBS)
++	$(LIBDNS_LIBS)		\
++	$(OPENSSL_LIBS)		\
++	$(LIBUV_LIBS)		\
++	$(ZLIB_LIBS)
+ 
+ bin_PROGRAMS = \
+ 	dnssec-cds		\
